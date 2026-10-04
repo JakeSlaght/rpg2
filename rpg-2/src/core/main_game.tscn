@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://btq788dnwxjdy"]
 
+[ext_resource type="Script" uid="uid://btokoqpom7xld" path="res://src/debug/debug_layer.gd" id="1_ike8k"]
 [ext_resource type="PackedScene" uid="uid://pidjx4x8sm3a" path="res://src/debug/debug_text_overlay.tscn" id="1_keldc"]
 
 [node name="MainGame" type="Node" unique_id=819751675]
@@ -55,6 +56,7 @@ offset_bottom = 40.0
 [node name="DebugLayer" type="CanvasLayer" parent="." unique_id=2127142657]
 process_mode = 3
 layer = 128
+script = ExtResource("1_ike8k")
 
 [node name="DebugRoot" type="Control" parent="DebugLayer" unique_id=1595865404]
 custom_maximum_size = Vector2(0, 0)
