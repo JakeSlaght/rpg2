@@ -13,7 +13,6 @@ func _ready() -> void:
 	InputGlobal.input_received.connect(_on_input_received)
 	_on_debug_toggled(Debug.enabled)
 
-	
 func _process(delta: float) -> void:
 	fps_label.set_text("FPS: " + str(Engine.get_frames_per_second()))
 
