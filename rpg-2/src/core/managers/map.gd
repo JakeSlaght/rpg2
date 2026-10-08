@@ -7,6 +7,7 @@ const ROOM_HEIGHT := 8
 const TILE_SIZE := 40
 
 @onready var level_root: Node2D = %LevelRoot
+@onready var camera: Camera2D = %Camera2D
 
 var map_data := {
 	Vector2i(0, 0): {
@@ -14,14 +15,13 @@ var map_data := {
 		"east": true,
 		"south": true,
 		"west": false
-		}
-	#},
-	#Vector2i(1, 0): {
-		#"north": false,
-		#"east": false,
-		#"south": true,
-		#"west": true
-	#}
+		},
+	Vector2i(1, 0): {
+		"north": false,
+		"east": false,
+		"south": true,
+		"west": true
+	}
 }
 
 
@@ -48,5 +48,47 @@ func generate_map() -> void:
 		)
 
 		level_root.add_child(room)
+		configure_room_transitions(room, map_position)
+		room.player_exited.connect(_on_room_exit.bind(map_position))
 		print('Room generated with tile map layer: ', room.get_node_or_null("TileMapLayer"))
 		room.generate_room()
+
+
+func configure_room_transitions(room: Node, map_position: Vector2i) -> void:
+		room.set_transition_enabled(
+			Vector2i.UP,
+			map_data.has(map_position + Vector2i.UP)
+			)
+		room.set_transition_enabled(
+			Vector2i.RIGHT,
+			map_data.has(map_position + Vector2i.RIGHT)
+			)
+		room.set_transition_enabled(
+			Vector2i.DOWN,
+			map_data.has(map_position + Vector2i.DOWN)
+			)
+		room.set_transition_enabled(
+			Vector2i.LEFT,
+			map_data.has(map_position + Vector2i.LEFT)
+			)
+
+
+func _on_room_exit(direction: Vector2i, current_room: Vector2i) -> void:
+		print_debug("ROOM EXIT TRIGGER", current_room, direction)
+		
+		var destination := current_room + direction
+		
+		if not map_data.has(destination):
+			return
+		
+		move_camera_to_room(destination)
+
+func move_camera_to_room(map_position: Vector2i) -> void:
+	var target := Vector2(
+		map_position.x * ROOM_WIDTH * TILE_SIZE + (ROOM_WIDTH * TILE_SIZE) / 2,
+		map_position.y * ROOM_HEIGHT * TILE_SIZE + (ROOM_HEIGHT * TILE_SIZE) / 2
+		)
+		
+	print_debug("camera target", target)
+	var tween := create_tween()
+	tween.tween_property(camera, "position", target, 0.3)
