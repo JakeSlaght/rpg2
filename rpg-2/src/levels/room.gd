@@ -7,9 +7,27 @@ const ROOM_HEIGHT := 8
 @export var east_door := false
 @export var south_door := false
 @export var west_door := false
+@onready var east_area: Area2D = %EastArea
+@onready var south_area: Area2D = %SouthArea
+@onready var west_area: Area2D = %WestArea
+@onready var north_area: Area2D = %NorthArea
+
+signal player_exited(direction: Vector2i)
 
 func _ready() -> void:
 	Bus.room_configuration_changed.connect(regenerate)
+	north_area.body_entered.connect(
+		_on_transition_entered.bind(Vector2i.UP)
+	)
+	east_area.body_entered.connect(
+		_on_transition_entered.bind(Vector2i.RIGHT)
+	)
+	south_area.body_entered.connect(
+		_on_transition_entered.bind(Vector2i.DOWN)
+	)
+	west_area.body_entered.connect(
+		_on_transition_entered.bind(Vector2i.LEFT)
+	)
 
 func generate_room() -> void:
 	var tile_map_layer: TileMapLayer = %TileMapLayer
@@ -70,3 +88,29 @@ func regenerate(north, east, south, west) -> void:
 	self.east_door = east
 	self.west_door = west
 	generate_room()
+	
+func set_transition_enabled(direction: Vector2i, enabled: bool) -> void:
+	var area: Area2D
+
+	match direction:
+		Vector2i.UP:
+			area = %NorthArea 
+		Vector2i.RIGHT:
+			area = %EastArea
+		Vector2i.DOWN:
+			area = %SouthArea
+		Vector2i.LEFT:
+			area = %WestArea
+
+	area.visible = enabled
+	area.monitoring = enabled
+	
+func _on_transition_entered(body: Node2D, direction: Vector2i) -> void:
+	if not body.is_in_group("player"):
+		return
+
+	if body.velocity.dot(Vector2(direction)) <= 0:
+		return
+		
+	#if body.is_in_group("player"):
+	player_exited.emit(direction)

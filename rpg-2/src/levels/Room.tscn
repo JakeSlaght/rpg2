@@ -9,16 +9,7 @@ texture = ExtResource("1_3hv13")
 texture_region_size = Vector2i(40, 40)
 0:0/0 = 0
 0:0/0/terrain_set = 0
-0:0/0/terrain = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
-0:0/0/terrains_peering_bit/right_side = 0
-0:0/0/terrains_peering_bit/bottom_right_corner = 0
-0:0/0/terrains_peering_bit/bottom_side = 0
-0:0/0/terrains_peering_bit/bottom_left_corner = 0
-0:0/0/terrains_peering_bit/left_side = 0
-0:0/0/terrains_peering_bit/top_left_corner = 0
-0:0/0/terrains_peering_bit/top_side = 0
-0:0/0/terrains_peering_bit/top_right_corner = 0
 1:0/0 = 0
 1:0/0/terrain_set = 0
 1:0/0/terrain = 1
@@ -50,6 +41,12 @@ terrain_set_0/terrain_1/name = "floor 1"
 terrain_set_0/terrain_1/color = Color(1, 1, 1, 1)
 sources/0 = SubResource("TileSetAtlasSource_fghu7")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2b7q4"]
+size = Vector2(560, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u0mp"]
+size = Vector2(40, 280)
+
 [node name="Room" type="Node2D" unique_id=333871436]
 script = ExtResource("1_fghu7")
 
@@ -58,3 +55,38 @@ unique_name_in_owner = true
 tile_set = SubResource("TileSet_2b7q4")
 rendering_quadrant_size = 40
 physics_quadrant_size = 40
+
+[node name="Transitions" type="Node2D" parent="." unique_id=1187118360]
+
+[node name="NorthArea" type="Area2D" parent="Transitions" unique_id=389153270]
+unique_name_in_owner = true
+collision_mask = 2
+
+[node name="NorthCollision" type="CollisionShape2D" parent="Transitions/NorthArea" unique_id=1750211110]
+position = Vector2(320, 20)
+shape = SubResource("RectangleShape2D_2b7q4")
+debug_color = Color(1, 0, 0, 1)
+
+[node name="EastArea" type="Area2D" parent="Transitions" unique_id=1280174551]
+unique_name_in_owner = true
+
+[node name="EastCollision" type="CollisionShape2D" parent="Transitions/EastArea" unique_id=1747160333]
+position = Vector2(620, 180)
+shape = SubResource("RectangleShape2D_8u0mp")
+debug_color = Color(0, 0, 1, 1)
+
+[node name="SouthArea" type="Area2D" parent="Transitions" unique_id=1633592612]
+unique_name_in_owner = true
+
+[node name="SouthCollision" type="CollisionShape2D" parent="Transitions/SouthArea" unique_id=1948939425]
+position = Vector2(320, 340)
+shape = SubResource("RectangleShape2D_2b7q4")
+debug_color = Color(0, 1, 0, 1)
+
+[node name="WestArea" type="Area2D" parent="Transitions" unique_id=1280364027]
+unique_name_in_owner = true
+
+[node name="WestColision" type="CollisionShape2D" parent="Transitions/WestArea" unique_id=530088452]
+position = Vector2(20, 180)
+shape = SubResource("RectangleShape2D_8u0mp")
+debug_color = Color(1, 1, 0, 1)
