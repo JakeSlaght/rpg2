@@ -23,6 +23,7 @@ boot_splash/minimum_display_time=1000
 
 Debug="*uid://uwomwy7bby6j"
 InputGlobal="*uid://d2gxec6h3l2ss"
+Bus="*uid://cihlw8uitlnkx"
 
 [display]
 

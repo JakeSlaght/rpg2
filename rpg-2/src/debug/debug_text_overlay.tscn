@@ -4,40 +4,82 @@
 
 [node name="DebugTextOverlay" type="Control" unique_id=1648220256]
 layout_mode = 3
-anchors_preset = 9
-anchor_bottom = 1.0
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+anchors_preset = 0
 script = ExtResource("1_jv051")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1678701487]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 532.0
+offset_bottom = 124.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=575232144]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=30305809]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 340
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=575232144]
 layout_mode = 2
 
-[node name="FPSLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=215857035]
+[node name="FPSLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=215857035]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "FPS:"
 
-[node name="VersionInfo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1015641243]
+[node name="VersionInfo" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1015641243]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Version: "
 
-[node name="ProjectInfo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1210398173]
+[node name="ProjectInfo" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1210398173]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Project: "
 
-[node name="TextInputInfo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=841078831]
+[node name="TextInputInfo" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=841078831]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=671892993]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=599778147]
+layout_mode = 2
+text = "Room toggles"
+
+[node name="North" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1922252302]
+unique_name_in_owner = true
+layout_mode = 2
+text = "North"
+
+[node name="East" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=900904960]
+unique_name_in_owner = true
+layout_mode = 2
+text = "East"
+
+[node name="South" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=2097130247]
+unique_name_in_owner = true
+layout_mode = 2
+text = "South"
+
+[node name="West" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1521646633]
+unique_name_in_owner = true
+layout_mode = 2
+text = "West"
+
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer2/North" to="." method="_on_north_toggled"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer2/East" to="." method="_on_east_toggled"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer2/South" to="." method="_on_south_toggled"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer2/West" to="." method="_on_west_toggled"]
