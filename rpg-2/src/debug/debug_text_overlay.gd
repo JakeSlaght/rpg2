@@ -7,13 +7,17 @@ const PROJECT_NAME    : String = "application/config/name"
 @onready var version_info: Label = %VersionInfo
 @onready var project_info: Label = %ProjectInfo
 @onready var text_input_info: Label = %TextInputInfo
+@onready var north: CheckButton = %North
+@onready var east: CheckButton = %East
+@onready var south: CheckButton = %South
+@onready var west: CheckButton = %West
 
 func _ready() -> void:
 	Debug.debug_toggled.connect(_on_debug_toggled)
 	InputGlobal.input_received.connect(_on_input_received)
 	_on_debug_toggled(Debug.enabled)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	fps_label.set_text("FPS: " + str(Engine.get_frames_per_second()))
 
 func _on_debug_toggled(value: bool) -> void:
@@ -34,15 +38,13 @@ func _on_input_received(event: InputEvent) -> void:
 		if event.is_action(action):
 			matched_actions.append(action)
 
-	text_input_info.text = "Input: %s\nActions: %s" % [
-		_get_event_name(event),
-		", ".join(matched_actions)
-	]
-
+	#text_input_info.text = "Input: %s\nActions: %s" % [
+		#_get_event_name(event),
+		#", ".join(matched_actions)
+	#]
 
 func _get_event_name(event: InputEvent) -> String:
 	return event.as_text()
-
 
 func _add_version_to_info_label() -> void:
 	var version_str : String = ProjectSettings.get_setting(VERSION_SETTING)
@@ -51,3 +53,29 @@ func _add_version_to_info_label() -> void:
 func _add_project_name_to_label() -> void:
 	var project_name_str : String = ProjectSettings.get_setting(PROJECT_NAME)
 	project_info.set_text("Project: " + project_name_str)
+
+func _emit_room_doors() -> void:
+	print("EMITTING ROOM CONFIG")
+	Bus.room_configuration_changed.emit(
+		north.button_pressed,
+		east.button_pressed,
+		south.button_pressed,
+		west.button_pressed
+	)
+	print_debug("room config emitter triggered")
+
+func _on_north_toggled(_toggled_on: bool) -> void:
+	print_debug('trigger')
+	_emit_room_doors()
+
+
+func _on_east_toggled(_toggled_on: bool) -> void:
+	_emit_room_doors()
+
+
+func _on_south_toggled(_toggled_on: bool) -> void:
+	_emit_room_doors()
+
+
+func _on_west_toggled(_toggled_on: bool) -> void:
+	_emit_room_doors()

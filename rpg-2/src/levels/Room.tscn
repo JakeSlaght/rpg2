@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://ho8uoyevrmx8"]
+
+[ext_resource type="Texture2D" uid="uid://cc5yur2psyw7r" path="res://assets/world/temp_tiles.png" id="1_3hv13"]
+[ext_resource type="Script" uid="uid://by1ei1fig341y" path="res://src/levels/room.gd" id="1_fghu7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fghu7"]
+resource_name = "temp"
+texture = ExtResource("1_3hv13")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+0:0/0/terrains_peering_bit/right_side = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_side = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 0
+0:0/0/terrains_peering_bit/left_side = 0
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_side = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 1
+1:0/0/terrains_peering_bit/right_side = 1
+1:0/0/terrains_peering_bit/bottom_right_corner = 1
+1:0/0/terrains_peering_bit/bottom_side = 1
+1:0/0/terrains_peering_bit/bottom_left_corner = 1
+1:0/0/terrains_peering_bit/left_side = 1
+1:0/0/terrains_peering_bit/top_left_corner = 1
+1:0/0/terrains_peering_bit/top_side = 1
+1:0/0/terrains_peering_bit/top_right_corner = 1
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2b7q4"]
+tile_size = Vector2i(40, 40)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 6
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "wall"
+terrain_set_0/terrain_0/color = Color(9.259325e-06, 4.029571e-06, 2.0210075e-06, 1)
+terrain_set_0/terrain_1/name = "floor 1"
+terrain_set_0/terrain_1/color = Color(1, 1, 1, 1)
+sources/0 = SubResource("TileSetAtlasSource_fghu7")
+
+[node name="Room" type="Node2D" unique_id=333871436]
+script = ExtResource("1_fghu7")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1369978335]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_2b7q4")
+rendering_quadrant_size = 40
+physics_quadrant_size = 40
