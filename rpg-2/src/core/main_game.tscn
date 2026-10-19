@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://pidjx4x8sm3a" path="res://src/debug/debug_text_overlay.tscn" id="1_keldc"]
 [ext_resource type="PackedScene" uid="uid://bwosgc6phyefr" path="res://src/core/managers/map-manager.tscn" id="1_rt44x"]
 [ext_resource type="PackedScene" uid="uid://lodcbd61do07" path="res://src/gameplay/Player/player.tscn" id="2_bycoy"]
+[ext_resource type="Script" uid="uid://btuio1mqxvdsk" path="res://src/core/hud/hud.gd" id="3_rt44x"]
 
 [node name="MainGame" type="Node" unique_id=819751675]
 process_mode = 3
@@ -49,6 +50,12 @@ position = Vector2(154, 190)
 [node name="EffectsRoot" type="Node2D" parent="World/SubViewportContainer/WorldViewport" unique_id=195370347]
 unique_name_in_owner = true
 
+[node name="ForegroundRoot" type="Node2D" parent="World/SubViewportContainer/WorldViewport" unique_id=1689132567]
+unique_name_in_owner = true
+
+[node name="ForegroundLayer" type="TileMapLayer" parent="World/SubViewportContainer/WorldViewport/ForegroundRoot" unique_id=1379611929]
+unique_name_in_owner = true
+
 [node name="ColorRect" type="ColorRect" parent="World/SubViewportContainer/WorldViewport" unique_id=2095772451]
 visible = false
 anchors_preset = 15
@@ -67,21 +74,31 @@ layer = 10
 
 [node name="HudRoot" type="Control" parent="HudLayer" unique_id=1092233623]
 unique_name_in_owner = true
+process_mode = 3
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_rt44x")
 
-[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=591283697]
-process_mode = 2
-layer = 20
-
-[node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=1622375114]
+[node name="CompactHUD" type="PanelContainer" parent="HudLayer/HudRoot" unique_id=1851943431]
 unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
 offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="ExpandedHUD" type="PanelContainer" parent="HudLayer/HudRoot" unique_id=1890245234]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
 
 [node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=471173412]
 process_mode = 3
@@ -101,12 +118,22 @@ script = ExtResource("1_ike8k")
 
 [node name="DebugRoot" type="Control" parent="DebugLayer" unique_id=1595865404]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DebugTextOverlay" parent="DebugLayer/DebugRoot" unique_id=1648220256 instance=ExtResource("1_keldc")]
+[node name="DebugContainer" type="PanelContainer" parent="DebugLayer/DebugRoot" unique_id=440840663]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="DebugTextOverlay" parent="DebugLayer/DebugRoot/DebugContainer" unique_id=1648220256 instance=ExtResource("1_keldc")]
 custom_maximum_size = Vector2(0, 0)
-layout_mode = 0
-offset_left = 9.0
-offset_top = 63.0
-offset_right = 9.0
-offset_bottom = 63.0
+layout_mode = 2
