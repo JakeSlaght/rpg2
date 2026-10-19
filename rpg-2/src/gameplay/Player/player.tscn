@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0sdp8"]
 atlas = ExtResource("2_2cd5h")
-region = Rect2(0, 0, 17, 23)
+region = Rect2(0, 0, 24, 23)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2b7q4"]
 animations = [{
