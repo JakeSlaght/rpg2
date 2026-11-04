@@ -62,6 +62,7 @@ physics_quadrant_size = 40
 
 [node name="NorthArea" type="Area2D" parent="Transitions" unique_id=389153270]
 unique_name_in_owner = true
+collision_mask = 2
 
 [node name="NorthCollision" type="CollisionShape2D" parent="Transitions/NorthArea" unique_id=1750211110]
 position = Vector2(320, 20)
@@ -70,6 +71,7 @@ debug_color = Color(1, 0, 0, 1)
 
 [node name="EastArea" type="Area2D" parent="Transitions" unique_id=1280174551]
 unique_name_in_owner = true
+collision_mask = 2
 
 [node name="EastCollision" type="CollisionShape2D" parent="Transitions/EastArea" unique_id=1560993873]
 position = Vector2(620, 160)
@@ -78,6 +80,7 @@ debug_color = Color(0, 0, 1, 1)
 
 [node name="SouthArea" type="Area2D" parent="Transitions" unique_id=1633592612]
 unique_name_in_owner = true
+collision_mask = 2
 
 [node name="SouthCollision" type="CollisionShape2D" parent="Transitions/SouthArea" unique_id=1948939425]
 position = Vector2(320, 300)
@@ -86,6 +89,7 @@ debug_color = Color(0, 1, 0, 1)
 
 [node name="WestArea" type="Area2D" parent="Transitions" unique_id=1280364027]
 unique_name_in_owner = true
+collision_mask = 2
 
 [node name="WestColision" type="CollisionShape2D" parent="Transitions/WestArea" unique_id=530088452]
 position = Vector2(20, 160)
