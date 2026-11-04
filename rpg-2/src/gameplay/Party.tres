@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PartyData" format=3 uid="uid://0dmurvcr0s6s"]
+
+[ext_resource type="Script" uid="uid://cx3hrxaxugq1r" path="res://src/core/assets/character-data.gd" id="1_0n2j8"]
+[ext_resource type="Script" uid="uid://cx7npg86ck0ln" path="res://src/core/assets/party-data.gd" id="2_81r32"]
+
+[resource]
+script = ExtResource("2_81r32")
+metadata/_custom_type_script = "uid://cx7npg86ck0ln"

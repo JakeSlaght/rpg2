@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://csybdatu2vbje"]
+
+[ext_resource type="Script" uid="uid://cqw30wq8a5ebv" path="res://src/core/assets/npc-data.gd" id="1_7vw0y"]
+[ext_resource type="PackedScene" uid="uid://cueyb743cg776" path="res://src/gameplay/Entities/NPC.tscn" id="1_ofnci"]
+
+[resource]
+script = ExtResource("1_7vw0y")
+npc_name = "Elder"
+spawn_position = Vector2i(320, 160)
+dialogue_lines = Array[String](["\"You've returned, little one.\"", "\"It's dangerous up there.\"", "\"Pick a path, and choose wisely.\""])
+npc_scene = ExtResource("1_ofnci")
+is_interaction_enabled = true
+metadata/_custom_type_script = "uid://cqw30wq8a5ebv"

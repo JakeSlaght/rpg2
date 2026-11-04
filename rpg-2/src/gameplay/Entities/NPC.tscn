@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cueyb743cg776"]
+
+[ext_resource type="Script" uid="uid://dh4oclmpbs51i" path="res://src/gameplay/Entities/npc.gd" id="1_6w7gg"]
+[ext_resource type="Texture2D" uid="uid://bs67s5wkkcsgg" path="res://icon.svg" id="2_olaaw"]
+[ext_resource type="Script" uid="uid://b8uo3qeoycriq" path="res://src/core/interaction/interaction_area.gd" id="3_270ow"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_270ow"]
+atlas = ExtResource("2_olaaw")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2b7q4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_270ow")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7q4"]
+radius = 122.0041
+
+[node name="non-player" type="CharacterBody2D" unique_id=59743202]
+script = ExtResource("1_6w7gg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1875126511]
+sprite_frames = SubResource("SpriteFrames_2b7q4")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=742576970]
+unique_name_in_owner = true
+collision_mask = 2
+script = ExtResource("3_270ow")
+metadata/_custom_type_script = "uid://b8uo3qeoycriq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1672487223]
+shape = SubResource("CircleShape2D_2b7q4")
+
+[connection signal="body_entered" from="InteractionArea" to="InteractionArea" method="_on_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="InteractionArea" method="_on_body_exited"]

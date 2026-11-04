@@ -3,46 +3,37 @@ class_name MapManager
 extends Node
 
 const ROOM_SCENE := preload("res://src/levels/Room.tscn")
+const NPC_SCENE := preload("res://src/gameplay/Entities/NPC.tscn")
 const ROOM_WIDTH := 16
 const ROOM_HEIGHT := 8
 const TILE_SIZE := 40
 
+@onready var entity_root: Node2D = %EntityRoot
 @onready var level_root: Node2D = %LevelRoot
 @onready var foreground_root: Node2D = %ForegroundRoot
 @onready var foreground_layer: TileMapLayer = %ForegroundLayer
 @onready var camera: Camera2D = %Camera2D
+@onready var party_manager: PartyManager = %PartyManager
 
-var map_data := {
-	Vector2i(0, 0): {
-		"north": false,
-		"east": true,
-		"south": true,
-		"west": false
-	},
-	Vector2i(1, 0): {
-		"north": false,
-		"east": false,
-		"south": true,
-		"west": true
-	},
-	Vector2i(0, 1): {
-		"north": true,
-		"east": true,
-		"south": false,
-		"west": false
-	},
-	Vector2i(1, 1): {
-		"north": true,
-		"east": false,
-		"south": false,
-		"west": true
-	}
-}
+@export var map_data: MapData
+
 var visited_rooms: Array[Vector2i] = []
 
 func _ready() -> void:
-	generate_map()
+	if map_data == null:
+		push_error("MapManager: No Map Data Loaded")
+		return
 
+	generate_player.call_deferred()
+	generate_map()
+	
+
+func generate_player() -> void:
+	var character := CharacterData.new()
+	character.sprite_frames = load("res://src/gameplay/Player/temp.tres")
+	party_manager.add_to_available_character_list(character)
+	party_manager.add_to_active_roster(character)
+	party_manager.set_active_character(0)
 
 func generate_map() -> void:
 	# Clear the previous map and its shared foreground.
@@ -51,16 +42,16 @@ func generate_map() -> void:
 
 	foreground_layer.clear()
 
-	var tileset_assigned := false
+	#var tileset_assigned := false
 
-	for map_position in map_data:
-		var room_data: Dictionary = map_data[map_position]
+	for map_position in map_data.rooms:
+		var room_data: RoomData = map_data.rooms[map_position]
 		var room = ROOM_SCENE.instantiate()
 
-		room.north_door = room_data["north"]
-		room.east_door = room_data["east"]
-		room.south_door = room_data["south"]
-		room.west_door = room_data["west"]
+		room.north_door = room_data.north
+		room.east_door = room_data.east
+		room.south_door = room_data.south
+		room.west_door = room_data.west
 
 		room.position = Vector2(
 			map_position.x * ROOM_WIDTH * TILE_SIZE,
@@ -68,13 +59,6 @@ func generate_map() -> void:
 		)
 
 		level_root.add_child(room)
-
-		var room_tile_layer: TileMapLayer = room.get_node("TileMapLayer")
-
-		# The shared layer uses the same TileSet resource as the room.
-		if not tileset_assigned:
-			foreground_layer.tile_set = room_tile_layer.tile_set
-			tileset_assigned = true
 
 		# Convert the room's map position to tile coordinates.
 		var tile_offset := Vector2i(
@@ -93,13 +77,12 @@ func generate_map() -> void:
 			_on_room_exit.bind(map_position)
 		)
 
-		print(
-			"Room generated with tile map layer: ",
-			room_tile_layer
-		)
-
 		room.generate_room()
-		mark_room_visited(Vector2i(0, 0))
+		room.setup_npcs(room_data.npcs, entity_root)
+		
+
+	# Mark the starting room as discovered once the map is generated.
+	mark_room_visited(Vector2i(0, 0))
 
 func configure_room_transitions(
 	room: Node,
@@ -107,29 +90,26 @@ func configure_room_transitions(
 ) -> void:
 	room.set_transition_enabled(
 		Vector2i.UP,
-		map_data.has(map_position + Vector2i.UP)
+		map_data.rooms.has(map_position + Vector2i.UP)
 	)
 	room.set_transition_enabled(
 		Vector2i.RIGHT,
-		map_data.has(map_position + Vector2i.RIGHT)
+		map_data.rooms.has(map_position + Vector2i.RIGHT)
 	)
 	room.set_transition_enabled(
 		Vector2i.DOWN,
-		map_data.has(map_position + Vector2i.DOWN)
+		map_data.rooms.has(map_position + Vector2i.DOWN)
 	)
 	room.set_transition_enabled(
 		Vector2i.LEFT,
-		map_data.has(map_position + Vector2i.LEFT)
+		map_data.rooms.has(map_position + Vector2i.LEFT)
 	)
 
 
-
 func _on_room_exit(direction: Vector2i, current_room: Vector2i) -> void:
-	print_debug("ROOM EXIT TRIGGER", current_room, direction)
-
 	var destination := current_room + direction
 
-	if not map_data.has(destination):
+	if not map_data.rooms.has(destination):
 		return
 
 	var player := get_tree().get_first_node_in_group("player") as Node2D
@@ -140,10 +120,10 @@ func _on_room_exit(direction: Vector2i, current_room: Vector2i) -> void:
 			destination.y * ROOM_HEIGHT * TILE_SIZE
 		)
 
-		var offset := Vector2(
-			ROOM_WIDTH * TILE_SIZE / 2.0,
-			ROOM_HEIGHT * TILE_SIZE / 2.0
-		)
+		#var offset := Vector2(
+			#ROOM_WIDTH * TILE_SIZE / 2.0,
+			#ROOM_HEIGHT * TILE_SIZE / 2.0
+		#)
 
 		match direction:
 			Vector2i.RIGHT:
@@ -158,18 +138,16 @@ func _on_room_exit(direction: Vector2i, current_room: Vector2i) -> void:
 	move_camera_to_room(destination)
 	mark_room_visited(destination)
 
+
 func move_camera_to_room(map_position: Vector2i) -> void:
 	var target := Vector2(
-		map_position.x * ROOM_WIDTH * TILE_SIZE
-			+ (ROOM_WIDTH * TILE_SIZE) / 2,
-		map_position.y * ROOM_HEIGHT * TILE_SIZE
-			+ (ROOM_HEIGHT * TILE_SIZE) / 2
+		map_position.x * ROOM_WIDTH * TILE_SIZE + (ROOM_WIDTH * TILE_SIZE) / 2,
+		map_position.y * ROOM_HEIGHT * TILE_SIZE + (ROOM_HEIGHT * TILE_SIZE) / 2
 	)
-
-	print_debug("camera target", target)
 
 	var tween := create_tween()
 	tween.tween_property(camera, "position", target, 0.3)
+
 
 func configure_foreground(room: Node2D) -> void:
 	var room_layer: TileMapLayer = room.get_node("TileMapLayer")
@@ -178,5 +156,7 @@ func configure_foreground(room: Node2D) -> void:
 		foreground_layer.tile_set = room_layer.tile_set
 
 func mark_room_visited(room_position: Vector2i) -> void:
-	if not visited_rooms.has(room_position):
-		visited_rooms.append(room_position)
+	if not map_data.rooms.has(room_position):
+		return
+
+	map_data.rooms[room_position].is_discovered = true

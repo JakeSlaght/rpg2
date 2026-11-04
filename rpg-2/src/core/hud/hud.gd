@@ -44,3 +44,7 @@ func toggle_pause() -> void:
 
 	if not is_paused:
 		tween.finished.connect(expanded_hud.hide)
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

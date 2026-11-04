@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="MapData" format=3 uid="uid://dbx3ikdifdfke"]
+
+[ext_resource type="Script" uid="uid://crt8k0lmq2ssx" path="res://src/core/assets/room-data.gd" id="1_oghvh"]
+[ext_resource type="Script" uid="uid://cqw30wq8a5ebv" path="res://src/core/assets/npc-data.gd" id="2_05cc2"]
+[ext_resource type="Script" uid="uid://c6j3jkp1f2q1b" path="res://src/core/assets/map-data.gd" id="2_pwgb4"]
+[ext_resource type="Resource" uid="uid://csybdatu2vbje" path="res://src/levels/npcs/elder.tres" id="3_5wbdq"]
+
+[sub_resource type="Resource" id="Resource_05cc2"]
+script = ExtResource("1_oghvh")
+east = true
+poi_type = 2
+metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
+
+[sub_resource type="Resource" id="Resource_5wbdq"]
+script = ExtResource("1_oghvh")
+south = true
+poi_type = 2
+metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
+
+[sub_resource type="Resource" id="Resource_oghvh"]
+script = ExtResource("1_oghvh")
+north = true
+east = true
+south = true
+west = true
+npcs = Array[ExtResource("2_05cc2")]([ExtResource("3_5wbdq")])
+poi_type = 2
+metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
+
+[sub_resource type="Resource" id="Resource_0sdp8"]
+script = ExtResource("1_oghvh")
+north = true
+poi_type = 2
+metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
+
+[sub_resource type="Resource" id="Resource_pwgb4"]
+script = ExtResource("1_oghvh")
+west = true
+poi_type = 2
+metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
+
+[resource]
+script = ExtResource("2_pwgb4")
+rooms = Dictionary[Vector2i, ExtResource("1_oghvh")]({
+Vector2i(-1, 0): SubResource("Resource_05cc2"),
+Vector2i(0, -1): SubResource("Resource_5wbdq"),
+Vector2i(0, 0): SubResource("Resource_oghvh"),
+Vector2i(0, 1): SubResource("Resource_0sdp8"),
+Vector2i(1, 0): SubResource("Resource_pwgb4")
+})
+metadata/_custom_type_script = "uid://c6j3jkp1f2q1b"

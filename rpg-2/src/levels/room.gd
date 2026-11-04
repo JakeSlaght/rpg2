@@ -28,13 +28,14 @@ const ROTATE_WEST := 3
 @onready var west_area: Area2D = %WestArea
 @onready var north_area: Area2D = %NorthArea
 
+@export var room_type: Globals.RoomType = Globals.RoomType.Dungeon
+
 signal player_exited(direction: Vector2i)
 
 # Shared foreground layer, assigned by MapManager.
 var foreground_layer: TileMapLayer
 var foreground_tile_offset := Vector2i.ZERO
 var _foreground_positions: Array[Vector2i] = []
-
 
 func _ready() -> void:
 	Bus.room_configuration_changed.connect(regenerate)
@@ -71,9 +72,6 @@ func generate_room() -> void:
 			foreground_layer.erase_cell(pos)
 
 	_foreground_positions.clear()
-
-	print("GENERATING ROOM")
-	print("tile_map_layer = ", tile_map_layer)
 
 	for y in range(ROOM_HEIGHT):
 		for x in range(ROOM_WIDTH):
@@ -202,24 +200,11 @@ func _set_door(door_pos: Vector2i) -> void:
 		rotation_steps,
 		tile_map_layer
 	)
-	print(
-	"DOOR CELL: ", door_pos,
-	" tile data: ", tile_map_layer.get_cell_atlas_coords(door_pos),
-	" source: ", tile_map_layer.get_cell_source_id(door_pos)
-	)
 
 	# Draw the doorframe in the shared foreground layer.
 	if is_instance_valid(foreground_layer):
 		var global_tile_position := tile_map_layer.to_global(tile_map_layer.map_to_local(door_pos))
 		var foreground_pos := foreground_layer.local_to_map(foreground_layer.to_local(global_tile_position))
-
-		print(
-			"FRAME: room=", position,
-			" door=", door_pos,
-			" offset=", foreground_tile_offset,
-			" foreground=", foreground_pos,
-			" atlas=", DOORFRAME_TILE
-		)
 
 		_set_rotated_tile(
 			foreground_pos,
@@ -261,11 +246,7 @@ func _set_rotated_tile(
 				TileSetAtlasSource.TRANSFORM_TRANSPOSE
 				| TileSetAtlasSource.TRANSFORM_FLIP_V
 			)
-	print(
-		"SET TILE: pos=", tile_pos,
-		" atlas=", atlas_coords,
-		" source=", tile_map_layer.get_instance_id()
-	)
+
 	tile_map_layer.set_cell(
 		tile_pos,
 		0,
@@ -275,8 +256,6 @@ func _set_rotated_tile(
 
 
 func regenerate(north, east, south, west) -> void:
-	print("MAP MANAGER RECEIVED: ", north, east, south, west)
-
 	north_door = north
 	east_door = east
 	south_door = south
@@ -321,8 +300,18 @@ func _on_transition_entered(
 ) -> void:
 	if not body.is_in_group("player"):
 		return
-
+	
 	if body.velocity.dot(Vector2(direction)) <= 0:
 		return
 
 	player_exited.emit(direction)
+
+func setup_npcs(npcs: Array[NPCData], entity_root: Node2D) -> void:
+	for npc_data in npcs:
+		var npc = npc_data.npc_scene.instantiate()
+
+		npc.position = npc_data.spawn_position
+		npc.npc_name = npc_data.npc_name
+		npc.dialog_lines = npc_data.dialogue_lines
+
+		entity_root.add_child(npc)

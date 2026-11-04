@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bsd1ih1areokp"]
+
+[ext_resource type="Script" uid="uid://cfkwbd7mp5d37" path="res://src/core/interaction/interaction_manager.gd" id="1_l078f"]
+
+[node name="InteractionManager" type="Node2D" unique_id=1645720158]
+script = ExtResource("1_l078f")
+
+[node name="Label" type="Label" parent="." unique_id=1142340959]
+offset_right = 40.0
+offset_bottom = 23.0

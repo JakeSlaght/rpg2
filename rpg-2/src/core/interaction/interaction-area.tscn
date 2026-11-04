@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ldogxtxjsrhm"]
+
+[ext_resource type="Script" uid="uid://b8uo3qeoycriq" path="res://src/core/interaction/interaction_area.gd" id="1_neydn"]
+
+[node name="InteractionArea" type="Area2D" unique_id=2063274838]
+collision_mask = 2
+script = ExtResource("1_neydn")

@@ -55,27 +55,21 @@ func _add_project_name_to_label() -> void:
 	project_info.set_text("Project: " + project_name_str)
 
 func _emit_room_doors() -> void:
-	print("EMITTING ROOM CONFIG")
 	Bus.room_configuration_changed.emit(
 		north.button_pressed,
 		east.button_pressed,
 		south.button_pressed,
 		west.button_pressed
 	)
-	print_debug("room config emitter triggered")
 
 func _on_north_toggled(_toggled_on: bool) -> void:
-	print_debug('trigger')
 	_emit_room_doors()
-
 
 func _on_east_toggled(_toggled_on: bool) -> void:
 	_emit_room_doors()
 
-
 func _on_south_toggled(_toggled_on: bool) -> void:
 	_emit_room_doors()
-
 
 func _on_west_toggled(_toggled_on: bool) -> void:
 	_emit_room_doors()
