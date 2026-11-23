@@ -31,6 +31,9 @@ texture_region_size = Vector2i(40, 40)
 2:1/0 = 0
 3:1/0 = 0
 4:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+1:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_2b7q4"]
 tile_size = Vector2i(40, 40)

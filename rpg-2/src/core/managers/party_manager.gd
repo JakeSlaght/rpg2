@@ -9,6 +9,15 @@ func _ready() -> void:
 	assert(party_data != null, "PartyManager requires PartyData.")
 	
 
+func initialize_new_game() -> void:
+	var character := CharacterData.new()
+	character.character_name = "Test Name"
+	character.sprite_frames = load("res://src/gameplay/Player/basic-slime.tres")
+
+	add_to_available_character_list(character)
+	add_to_active_roster(character)
+	set_active_character(0)
+
 func get_active_character() -> CharacterData:
 	return party_data.party_members.get(party_data.active_character_index)
 
@@ -25,6 +34,7 @@ func add_to_active_roster(character: CharacterData) -> void:
 	if party_data.party_members.has(character): return
 	
 	party_data.party_members.append(character)
+	Bus.current_party_changed.emit(party_data.party_members)
 
 func remove_from_active_roster(character: CharacterData) -> void:
 	if character == null: return
@@ -39,6 +49,8 @@ func remove_from_active_roster(character: CharacterData) -> void:
 		party_data.active_character_index = 0
 	elif index < party_data.active_character_index:
 		party_data.active_character_index -= 1
+	
+	Bus.current_party_changed.emit(party_data.party_members)
 	
 func add_to_available_character_list(character: CharacterData) -> void:
 	if character == null: return

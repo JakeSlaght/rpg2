@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bmbs3htfowrp2"]
+
+[ext_resource type="Script" uid="uid://b7c6sqlw85t0q" path="res://src/core/hud/expanded_hud.gd" id="1_ps0ho"]
+
+[node name="ExpandedHUD" type="PanelContainer" unique_id=170385266]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ps0ho")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=985409578]
+layout_mode = 2
+color = Color(0.15607512, 0.15607512, 0.15607512, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1413547628]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1618040018]
+layout_mode = 2
+
+[node name="LeftSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=204969148]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/LeftSide" unique_id=68659285]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit Game"
+
+[node name="RightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=420143598]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CharacterProfiles" type="TabContainer" parent="MarginContainer/HBoxContainer/RightSide" unique_id=1712453759]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PartyInventory" type="Panel" parent="MarginContainer/HBoxContainer/RightSide" unique_id=1632727999]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/LeftSide/Quit" to="." method="_on_quit_pressed"]

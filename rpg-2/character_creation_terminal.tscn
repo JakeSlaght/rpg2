@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://cowk7k0ag48o5"]
+
+[ext_resource type="Script" uid="uid://c11iyyjiv02d8" path="res://src/core/terminal/character_creation_terminal.gd" id="1_f4rfl"]
+[ext_resource type="PackedScene" uid="uid://b4fqxv0acdna3" path="res://src/core/terminal/class_details_row.tscn" id="2_cc8tt"]
+
+[node name="CharacterCreationTerminal" type="Control" unique_id=1440775385]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f4rfl")
+class_details_row_scene = ExtResource("2_cc8tt")
+
+[node name="Panel" type="ColorRect" parent="." unique_id=42427529]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15607512, 0.15607512, 0.15607512, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1428077006]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1479521859]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=529062303]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=896881428]
+layout_mode = 2
+text = "Name: "
+
+[node name="CharacterName" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=839404991]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=212065722]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="CharacterAnimation" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer/Header" unique_id=1547168701]
+unique_name_in_owner = true
+
+[node name="StatsPanel" type="Panel" parent="MarginContainer/VBoxContainer/Header" unique_id=161539980]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header/StatsPanel" unique_id=1576556161]
+propagate_maximum_size = false
+layout_mode = 1
+offset_right = 39.0
+offset_bottom = 103.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header/StatsPanel/VBoxContainer" unique_id=1013928247]
+layout_mode = 2
+
+[node name="Health" type="Label" parent="MarginContainer/VBoxContainer/Header/StatsPanel/VBoxContainer/HBoxContainer" unique_id=2114629520]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Mana" type="Label" parent="MarginContainer/VBoxContainer/Header/StatsPanel/VBoxContainer/HBoxContainer" unique_id=1559983766]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ClassDetails" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header/StatsPanel/VBoxContainer" unique_id=392279792]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SphereGrid" type="Panel" parent="MarginContainer/VBoxContainer" unique_id=75779282]
+layout_mode = 2

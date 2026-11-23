@@ -11,6 +11,8 @@ const CORNER_TILE := Vector2i(2, 0)
 const OPEN_DOOR_TILE := Vector2i(0, 0)
 const CLOSE_DOOR_TILE := Vector2i(0, 1)
 const DOORFRAME_TILE := Vector2i(2, 1)
+const VOID_TILE := Vector2i(0,2)
+const GLASS_TILE := Vector2i(1,2)
 
 # Rotation steps: clockwise from the north-facing base tile.
 const ROTATE_NORTH := 0
@@ -31,6 +33,8 @@ const ROTATE_WEST := 3
 @export var room_type: Globals.RoomType = Globals.RoomType.Dungeon
 
 signal player_exited(direction: Vector2i)
+
+var room_data: RoomData
 
 # Shared foreground layer, assigned by MapManager.
 var foreground_layer: TileMapLayer
@@ -62,6 +66,9 @@ func set_foreground_layer(
 	foreground_tile_offset = tile_offset
 
 
+func set_room_data(data: RoomData) -> void:
+	room_data = data
+
 func generate_room() -> void:
 	var tile_map_layer: TileMapLayer = %TileMapLayer
 	tile_map_layer.clear()
@@ -80,15 +87,17 @@ func generate_room() -> void:
 			if _is_corner(tile_position):
 				_set_corner(tile_position, tile_map_layer)
 			elif _is_door(tile_position):
+				_set_terrain_tile(tile_position, tile_map_layer)
 				# Keep the doorway open on the regular layer.
-				_set_floor(tile_position, tile_map_layer)
+				#_set_floor(tile_position, tile_map_layer)
 
 				# Draw the door frame above the player.
 				_set_door(tile_position)
 			elif _is_wall(tile_position):
 				_set_wall(tile_position, tile_map_layer)
 			else:
-				_set_floor(tile_position, tile_map_layer)
+				_set_terrain_tile(tile_position, tile_map_layer)
+				#_set_floor(tile_position, tile_map_layer)
 
 
 func _is_wall(wall_pos: Vector2i) -> bool:
@@ -122,6 +131,22 @@ func _is_door(door_pos: Vector2i) -> bool:
 		return true
 
 	return false
+
+func _set_terrain_tile(
+	tile_pos: Vector2i,
+	tile_map_layer: TileMapLayer
+) -> void:
+	if room_data == null:
+		_set_floor(tile_pos, tile_map_layer)
+		return
+		
+	var row := room_data.tile_layout[tile_pos.y]
+	var tile := row.substr(tile_pos.x, 1)
+
+	match tile:
+		"V": tile_map_layer.set_cell(tile_pos, 0, VOID_TILE)
+		"G": tile_map_layer.set_cell(tile_pos, 0, GLASS_TILE)
+		_: _set_floor(tile_pos, tile_map_layer)
 
 
 func _set_floor(
@@ -309,9 +334,11 @@ func _on_transition_entered(
 func setup_npcs(npcs: Array[NPCData], entity_root: Node2D) -> void:
 	for npc_data in npcs:
 		var npc = npc_data.npc_scene.instantiate()
-
-		npc.position = npc_data.spawn_position
+		entity_root.add_child(npc)
+		
+		npc.global_position = to_global(npc_data.spawn_position)
+		#npc.sprite
 		npc.npc_name = npc_data.npc_name
 		npc.dialog_lines = npc_data.dialogue_lines
-
-		entity_root.add_child(npc)
+		#npc.set_has_collision(npc_data.has_collision)
+		npc.has_collision = npc_data.has_collision
