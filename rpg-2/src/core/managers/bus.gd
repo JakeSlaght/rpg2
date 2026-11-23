@@ -8,6 +8,9 @@ signal room_configuration_changed(
 	west: bool
 )
 
+# game state
+signal game_mode_changed(previous_mode, new_mode)
+
 # Interaction Area registration for NPCs and such
 signal register_interaction_area(area: InteractionArea)
 signal unregister_interaction_area(area: InteractionArea)
@@ -17,3 +20,4 @@ signal dialogue_display(speaker: String, lines: Array[String])
 
 # setting active character
 signal active_character_changed(character: CharacterData)
+signal current_party_changed(party: Array[CharacterData])

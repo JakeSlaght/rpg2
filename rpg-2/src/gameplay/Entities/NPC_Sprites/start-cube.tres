@@ -1,0 +1,35 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dhnnfpcdcfcsq"]
+
+[ext_resource type="Texture2D" uid="uid://blcyql2ias15e" path="res://assets/characters/start-cube.png" id="1_qidms"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yb103"]
+atlas = ExtResource("1_qidms")
+region = Rect2(0, 0, 40, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pqep"]
+atlas = ExtResource("1_qidms")
+region = Rect2(40, 0, 40, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kweit"]
+atlas = ExtResource("1_qidms")
+region = Rect2(80, 0, 40, 70)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb103")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pqep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb103")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kweit")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}]

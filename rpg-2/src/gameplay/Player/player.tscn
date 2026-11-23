@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://lodcbd61do07"]
 
 [ext_resource type="Script" uid="uid://bo2lmjbp2k1vn" path="res://src/gameplay/Player/player.gd" id="1_0sdp8"]
+[ext_resource type="SpriteFrames" uid="uid://c58j8bpdyrddi" path="res://src/gameplay/Player/basic-slime.tres" id="2_0sdp8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2b7q4"]
-size = Vector2(6, 16)
+size = Vector2(27, 27)
 
 [node name="Player" type="CharacterBody2D" unique_id=1973499843 groups=["player"]]
 collision_layer = 2
@@ -11,6 +12,10 @@ script = ExtResource("1_0sdp8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=160039535]
 unique_name_in_owner = true
+sprite_frames = ExtResource("2_0sdp8")
+autoplay = "default"
+frame_progress = 0.22257096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=739219665]
+position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_2b7q4")

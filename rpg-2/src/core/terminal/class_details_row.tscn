@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b4fqxv0acdna3"]
+
+[ext_resource type="Script" uid="uid://cljo3mcsfiu80" path="res://src/core/terminal/class_details_row.gd" id="1_kumd7"]
+
+[node name="ClassDetailsRow" type="HBoxContainer" unique_id=2089743919]
+script = ExtResource("1_kumd7")
+
+[node name="ClassName" type="Label" parent="." unique_id=1222434583]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ClassLevel" type="Label" parent="." unique_id=920641841]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ClassXP" type="TextureProgressBar" parent="." unique_id=908044656]
+unique_name_in_owner = true
+layout_mode = 2

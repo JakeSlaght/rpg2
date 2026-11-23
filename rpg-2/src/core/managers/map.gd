@@ -3,7 +3,7 @@ class_name MapManager
 extends Node
 
 const ROOM_SCENE := preload("res://src/levels/Room.tscn")
-const NPC_SCENE := preload("res://src/gameplay/Entities/NPC.tscn")
+const NPC_SCENE := preload("res://src/gameplay/Entities/starting-cube.tscn")
 const ROOM_WIDTH := 16
 const ROOM_HEIGHT := 8
 const TILE_SIZE := 40
@@ -24,16 +24,7 @@ func _ready() -> void:
 		push_error("MapManager: No Map Data Loaded")
 		return
 
-	generate_player.call_deferred()
 	generate_map()
-	
-
-func generate_player() -> void:
-	var character := CharacterData.new()
-	character.sprite_frames = load("res://src/gameplay/Player/temp.tres")
-	party_manager.add_to_available_character_list(character)
-	party_manager.add_to_active_roster(character)
-	party_manager.set_active_character(0)
 
 func generate_map() -> void:
 	# Clear the previous map and its shared foreground.
@@ -76,7 +67,8 @@ func generate_map() -> void:
 		room.player_exited.connect(
 			_on_room_exit.bind(map_position)
 		)
-
+		
+		room.set_room_data(room_data)
 		room.generate_room()
 		room.setup_npcs(room_data.npcs, entity_root)
 		

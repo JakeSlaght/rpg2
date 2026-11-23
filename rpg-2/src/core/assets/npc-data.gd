@@ -8,3 +8,4 @@ class_name NPCData
 @export var npc_scene: PackedScene
 @export var is_unique: bool
 @export var is_interaction_enabled: bool
+@export var has_collision: bool = true
