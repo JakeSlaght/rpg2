@@ -4,17 +4,30 @@ class_name GameManager
 @onready var party_manager: PartyManager = %PartyManager
 @export var character_creation_scene: PackedScene
 @export var interface_layer: CanvasLayer
+@onready var world: Node2D = %World
+@onready var start_screen: Control = %StartScreen
 
 var current_game_mode: Globals.GameMode = Globals.GameMode.None
 var character_creation_terminal: Control
 
 func _ready() -> void:
-	start_new_game.call_deferred()
+	Bus.new_game_requested.connect(start_new_game)
+	Bus.quit_requested.connect(quit_game)
+	
+	start_screen.show()
+	world.hide()
+	world.process_mode = Node.PROCESS_MODE_DISABLED
+
+	set_game_mode(Globals.GameMode.Menu)
 
 func start_new_game() -> void:
 	create_starting_character()
 	map_manager.generate_map()
 	party_manager.set_active_character(0)
+	
+	start_screen.hide()
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.show()
 	
 	set_game_mode(Globals.GameMode.Exploration)
 
@@ -57,5 +70,11 @@ func open_character_creation() -> void:
 	character_creation_terminal.setup(party_manager.get_active_character())
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("open_terminal"):
+	if current_game_mode != Globals.GameMode.Exploration:
+		return
+
+	if event.is_action_pressed("open_terminal") and not event.is_echo():
 		open_character_creation()
+		
+func quit_game() -> void:
+	get_tree().quit()

@@ -342,3 +342,13 @@ func setup_npcs(npcs: Array[NPCData], entity_root: Node2D) -> void:
 		npc.dialog_lines = npc_data.dialogue_lines
 		#npc.set_has_collision(npc_data.has_collision)
 		npc.has_collision = npc_data.has_collision
+
+func setup_environmental_objects(objects: Array[EnvironmentalObjectData], entity_root: Node2D) -> void:
+	for object_data in objects:
+		if object_data.scene == null:
+			continue
+			
+		var environmental_object = object_data.scene.instantiate()
+		entity_root.add_child(environmental_object)
+		environmental_object.global_position = to_global(%TileMapLayer.map_to_local(object_data.tile_position))
+		environmental_object.rotation_degrees = object_data.rotation

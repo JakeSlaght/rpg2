@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://duv6pphopp7r8" path="res://src/core/dialogue/dialogue_panel.tscn" id="6_nx426"]
 [ext_resource type="Script" uid="uid://n8efxd2a2eal" path="res://src/core/dialogue/dialogue_layer.gd" id="6_qhv2s"]
 [ext_resource type="PackedScene" uid="uid://bmbs3htfowrp2" path="res://src/core/hud/expanded_hud.tscn" id="8_c54s5"]
+[ext_resource type="PackedScene" uid="uid://b0fdu6pp8nr3w" path="res://src/core/start_screen.tscn" id="8_tfyxi"]
 
 [node name="MainGame" type="Node" unique_id=819751675]
 process_mode = 3
@@ -35,7 +36,11 @@ map_data = ExtResource("2_gtuoi")
 [node name="InteractionManager" parent="Systems" unique_id=1645720158 instance=ExtResource("2_prdqg")]
 unique_name_in_owner = true
 
+[node name="StartScreen" parent="." unique_id=1874666566 instance=ExtResource("8_tfyxi")]
+unique_name_in_owner = true
+
 [node name="World" type="Node2D" parent="." unique_id=1603482792]
+unique_name_in_owner = true
 process_mode = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="World" unique_id=1721763227]

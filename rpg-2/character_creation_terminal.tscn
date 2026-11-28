@@ -4,22 +4,26 @@
 [ext_resource type="PackedScene" uid="uid://b4fqxv0acdna3" path="res://src/core/terminal/class_details_row.tscn" id="2_cc8tt"]
 
 [node name="CharacterCreationTerminal" type="Control" unique_id=1440775385]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_f4rfl")
 class_details_row_scene = ExtResource("2_cc8tt")
 
 [node name="Panel" type="ColorRect" parent="." unique_id=42427529]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 color = Color(0.15607512, 0.15607512, 0.15607512, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1428077006]
@@ -45,6 +49,8 @@ layout_mode = 2
 text = "Name: "
 
 [node name="CharacterName" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=839404991]
+unique_name_in_owner = true
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 3
 

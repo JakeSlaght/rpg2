@@ -2,26 +2,25 @@
 
 [ext_resource type="Script" uid="uid://crt8k0lmq2ssx" path="res://src/core/assets/room-data.gd" id="1_oghvh"]
 [ext_resource type="Script" uid="uid://cqw30wq8a5ebv" path="res://src/core/assets/npc-data.gd" id="2_05cc2"]
+[ext_resource type="Script" uid="uid://bivq66q88s0ug" path="res://src/core/assets/environmental-object-data.gd" id="2_oeie2"]
 [ext_resource type="Script" uid="uid://c6j3jkp1f2q1b" path="res://src/core/assets/map-data.gd" id="2_pwgb4"]
 [ext_resource type="Resource" uid="uid://csybdatu2vbje" path="res://src/levels/npcs/elder.tres" id="3_5wbdq"]
+[ext_resource type="PackedScene" uid="uid://iia24kpboads" path="res://src/core/assets/terminal.tscn" id="3_furni"]
 [ext_resource type="PackedScene" uid="uid://ccc8p7urfwjdh" path="res://src/gameplay/Entities/generic.tscn" id="3_oeie2"]
 
-[sub_resource type="Resource" id="Resource_c54s5"]
-script = ExtResource("2_05cc2")
-npc_name = "Warrior"
-spawn_position = Vector2i(300, 160)
-dialogue_lines = Array[String](["\"This is the WARRIOR room\"", "\"The Warrior is a hard hitting and damage tank\""])
-npc_scene = ExtResource("3_oeie2")
-is_interaction_enabled = true
-has_collision = false
-metadata/_custom_type_script = "uid://cqw30wq8a5ebv"
+[sub_resource type="Resource" id="Resource_1jib1"]
+script = ExtResource("2_oeie2")
+scene = ExtResource("3_furni")
+tile_position = Vector2i(360, 160)
+rotation = 270.0
+metadata/_custom_type_script = "uid://bivq66q88s0ug"
 
 [sub_resource type="Resource" id="Resource_5wbdq"]
 script = ExtResource("1_oghvh")
 east = true
-npcs = Array[ExtResource("2_05cc2")]([SubResource("Resource_c54s5")])
 poi_type = 2
 tile_layout = Array[String](["\"VVVVVVVVVVVVVVVV\"", "\"VVVVVVVVVVVVVVVV\"", "\"VVVVVVVVVVVVVVVV\"", "\"VVVVVVVVVVVVVVVV\"", "\"GGGGGGGGGGGGGGGG\"", "\"VVVVVVVVVVVVVVVV\"", "\"VVVVVVVVVVVVVVVV\"", "\"VVVVVVVVVVVVVVVV\""])
+environmental_objects = Array[ExtResource("2_oeie2")]([SubResource("Resource_1jib1")])
 metadata/_custom_type_script = "uid://crt8k0lmq2ssx"
 
 [sub_resource type="Resource" id="Resource_kebec"]

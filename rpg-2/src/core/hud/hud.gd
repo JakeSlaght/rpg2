@@ -4,16 +4,21 @@ extends Control
 
 var is_paused := false
 var tween: Tween
+var current_game_mode: Globals.GameMode = Globals.GameMode.None
 
+func _on_game_mode_changed(_previous_mode: Globals.GameMode, new_mode: Globals.GameMode) -> void:
+	current_game_mode = new_mode
 
 func _ready() -> void:
+	Bus.game_mode_changed.connect(_on_game_mode_changed)
 	process_mode = Node.PROCESS_MODE_ALWAYS
-
 	expanded_hud.hide()
 	expanded_hud.position.y = -expanded_hud.size.y
 
-
 func _unhandled_input(event: InputEvent) -> void:
+	if current_game_mode != Globals.GameMode.Exploration:
+		return
+	
 	if event.is_action_pressed("pause") and not event.is_echo():
 		toggle_pause()
 		get_viewport().set_input_as_handled()

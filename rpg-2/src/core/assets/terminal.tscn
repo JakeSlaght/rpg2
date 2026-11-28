@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://iia24kpboads"]
+
+[ext_resource type="Texture2D" uid="uid://bclum2suno8yv" path="res://assets/world/terminal.png" id="1_lk3fh"]
+[ext_resource type="Script" uid="uid://b8uo3qeoycriq" path="res://src/core/interaction/interaction_area.gd" id="2_1jib1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2b7q4"]
+size = Vector2(22, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u0mp"]
+size = Vector2(23, 14)
+
+[node name="Terminal" type="StaticBody2D" unique_id=1175973006]
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1701167555]
+texture = ExtResource("1_lk3fh")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=258809008]
+script = ExtResource("2_1jib1")
+metadata/_custom_type_script = "uid://b8uo3qeoycriq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1477966863]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_2b7q4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1119262027]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_8u0mp")

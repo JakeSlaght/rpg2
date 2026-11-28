@@ -21,3 +21,7 @@ signal dialogue_display(speaker: String, lines: Array[String])
 # setting active character
 signal active_character_changed(character: CharacterData)
 signal current_party_changed(party: Array[CharacterData])
+
+# main menu triggerings
+signal new_game_requested
+signal quit_requested

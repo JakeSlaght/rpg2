@@ -71,6 +71,7 @@ func generate_map() -> void:
 		room.set_room_data(room_data)
 		room.generate_room()
 		room.setup_npcs(room_data.npcs, entity_root)
+		room.setup_environmental_objects(room_data.environmental_objects, entity_root)
 		
 
 	# Mark the starting room as discovered once the map is generated.

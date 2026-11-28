@@ -15,3 +15,5 @@ class_name RoomData
 @export var is_cleared: bool = false
 
 @export var tile_layout: Array[String] = []
+
+@export var environmental_objects: Array[EnvironmentalObjectData] = []
